@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">HealthChatbotApp</string>
+    <string name="welcome_title">Welcome to HealthBot</string>
+    <string name="welcome_subtitle">Please sign in to continue</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="action_sign_in">SIGN IN</string>
+    <string name="action_sign_up">SIGN UP</string>
+    <string name="hello_world">Hello, world!</string>
+    <string name="sign_out">Sign Out</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Declaring color palette here -->
+<resources>
+    <color name="md_theme_primary">#00796B</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_secondary">#80CBC4</color>
+    <color name="md_theme_background">#F5F5F5</color>
+    <color name="md_theme_onBackground">#212121</color>
+</resources>

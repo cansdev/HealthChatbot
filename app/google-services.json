@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "568705760217",
+    "project_id": "health-chatbot-43b4a",
+    "storage_bucket": "health-chatbot-43b4a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568705760217:android:5970f7a2d6ccb689cb37c8",
+        "android_client_info": {
+          "package_name": "com.example.healthchatbotapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy9T2ROoDtkMt1OYN24UWgZRI1KvjzEP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
