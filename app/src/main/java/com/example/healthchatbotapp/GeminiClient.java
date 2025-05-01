@@ -1,5 +1,7 @@
 package com.example.healthchatbotapp;
 
+import android.util.Log;
+
 import com.example.healthchatbotapp.BuildConfig;
 
 import com.google.gson.Gson;
@@ -48,6 +50,7 @@ public class GeminiClient {
         String jsonBody = gson.toJson(payload);
 
         RequestBody body = RequestBody.create(jsonBody, JSON);
+        Log.d("GeminiRequest", jsonBody);
         Request request = new Request.Builder()
                 .url(ENDPOINT)
                 .addHeader("Content-Type", "application/json")
@@ -63,21 +66,31 @@ public class GeminiClient {
             @Override
             public void onResponse(Call call, Response resp) throws IOException {
                 if (!resp.isSuccessful()) {
-                    listener.onFailure(new IOException("HTTP " + resp.code() + ": " + resp.message()));
+                    String errorBody = resp.body() != null ? resp.body().string() : "≪no body≫";
+                    listener.onFailure(new IOException(
+                            "HTTP " + resp.code() + ": " + resp.message()
+                                    + "\n" + errorBody
+                    ));
                     return;
                 }
 
+                // parse the new schema:
                 JsonObject root = JsonParser.parseReader(resp.body().charStream()).getAsJsonObject();
-                JsonArray cands = root.getAsJsonArray("candidates");
-                if (cands != null && cands.size() > 0) {
-                    JsonObject first = cands.get(0).getAsJsonObject();
-                    String output = first.has("output")
-                            ? first.get("output").getAsString()
-                            : "";
-                    listener.onSuccess(output);
-                } else {
-                    listener.onFailure(new IOException("No candidates in response"));
+                JsonArray candidates = root.getAsJsonArray("candidates");
+                if (candidates != null && candidates.size() > 0) {
+                    JsonObject first = candidates.get(0).getAsJsonObject();
+                    JsonObject content = first.getAsJsonObject("content");
+                    JsonArray parts = content.getAsJsonArray("parts");
+                    if (parts != null && parts.size() > 0) {
+                        String reply = parts
+                                .get(0).getAsJsonObject()
+                                .get("text").getAsString();
+                        listener.onSuccess(reply);
+                        return;
+                    }
                 }
+
+                listener.onFailure(new IOException("No reply in Gemini response"));
             }
         });
     }

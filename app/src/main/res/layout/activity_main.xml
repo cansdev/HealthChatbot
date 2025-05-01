@@ -89,11 +89,12 @@
                 style="?attr/materialIconButtonStyle"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:icon="@drawable/ic_baseline_send_24"
+                app:icon="@drawable/ic_baseline_send_24"
                 android:contentDescription="@string/send"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/tilMessage"
                 app:layout_constraintTop_toTopOf="@id/tilMessage"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

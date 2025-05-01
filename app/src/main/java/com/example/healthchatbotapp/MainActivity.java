@@ -1,44 +1,98 @@
 package com.example.healthchatbotapp;
 
-// Project ID: healthchatbotapp-458511
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Objects;
 
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // 1) Inflate your layout first
         setContentView(R.layout.activity_main);
-
-        // 2) Now you can find the toolbar view
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // 3) Edge‐to‐Edge (optional, but after setContentView)
         EdgeToEdge.enable(this);
-
-        // 4) Window insets on your root
         ViewCompat.setOnApplyWindowInsetsListener(
-                findViewById(R.id.main), (v, insets) -> {
-                    Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                findViewById(R.id.main),
+                (v, insets) -> {
+                    Insets sb = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                    v.setPadding(sb.left, sb.top, sb.right, sb.bottom);
                     return insets;
-                });
+                }
+        );
+
+        RecyclerView rvChat = findViewById(R.id.rvChat);
+        ChatAdapter adapter = new ChatAdapter(new ArrayList<>());
+        rvChat.setLayoutManager(new LinearLayoutManager(this));
+        rvChat.setAdapter(adapter);
+
+        TextInputEditText etMessage = findViewById(R.id.etMessage);
+        MaterialButton btnSend = findViewById(R.id.btnSend);
+        CircularProgressIndicator loading = findViewById(R.id.loading);
+        GeminiClient gemini = new GeminiClient();
+
+        btnSend.setOnClickListener(v -> {
+            String text = Objects.requireNonNull(etMessage.getText()).toString().trim();
+            if (text.isEmpty()) return;
+
+            adapter.addMessage(new ChatMessage(text, true));
+            rvChat.scrollToPosition(adapter.getItemCount() - 1);
+            etMessage.setText("");
+            btnSend.setEnabled(false);
+            loading.setVisibility(View.VISIBLE);
+
+            String fullPrompt =
+                    "You are HealthChatBotApp’s medical assistant. " +
+                            "Provide concise, friendly health advice.\n" +
+                            "Patient: " + text + "\nDoctor:";
+
+            gemini.generateContent(fullPrompt, new GeminiClient.Listener() {
+                @Override
+                public void onSuccess(String reply) {
+                    runOnUiThread(() -> {
+                        loading.setVisibility(View.GONE);
+                        btnSend.setEnabled(true);
+                        adapter.addMessage(new ChatMessage(reply, false));
+                        rvChat.scrollToPosition(adapter.getItemCount() - 1);
+                    });
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    runOnUiThread(() -> {
+                        loading.setVisibility(View.GONE);
+                        btnSend.setEnabled(true);
+                        // Show the entire error in a scrollable dialog:
+                        new MaterialAlertDialogBuilder(MainActivity.this)
+                                .setTitle("Gemini Error")
+                                .setMessage(e.getMessage())
+                                .setPositiveButton("OK", null)
+                                .show();
+                    });
+                }
+            });
+        });
     }
 
     @Override
@@ -46,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_sign_out) {

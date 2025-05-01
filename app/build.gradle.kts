@@ -70,5 +70,6 @@ dependencies {
     // Gemini HTTP & JSON
     implementation(libs.okhttp)
     implementation(libs.gson)
+    implementation(libs.monitor)
     testImplementation(libs.junit.junit)
 }
