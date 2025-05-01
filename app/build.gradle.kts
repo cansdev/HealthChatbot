@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
@@ -7,12 +10,31 @@ android {
     namespace = "com.example.healthchatbotapp"
     compileSdk = 35
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.example.healthchatbotapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+
+        // ──────────────────────────────────────────────────────────────
+        // Load local.properties manually
+        val propsFile = rootProject.file("local.properties")
+        if (!propsFile.exists()) {
+            throw GradleException("local.properties not found in project root")
+        }
+        val props = Properties().apply {
+            load(FileInputStream(propsFile))
+        }
+        val apiKey = props.getProperty("apiKey")
+            ?: throw GradleException("Please define 'apiKey' in local.properties")
+        // Expose it as BuildConfig:
+        buildConfigField("String", "GEMINI_API_KEY", "\"$apiKey\"")
+        // ──────────────────────────────────────────────────────────────
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +48,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -33,21 +56,19 @@ android {
 }
 
 dependencies {
-    // adding Android Material resources
     implementation(libs.material)
     implementation(libs.appcompat)
-    implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    // Firebase version manager
+
+    // Firebase
     implementation(platform(libs.firebase.bom))
-    // Analytics
     implementation(libs.firebase.analytics)
-    // Auth
     implementation(libs.firebase.auth)
-    // Firestore database
     implementation(libs.firebase.firestore)
+
+    // Gemini HTTP & JSON
+    implementation(libs.okhttp)
+    implementation(libs.gson)
+    testImplementation(libs.junit.junit)
 }

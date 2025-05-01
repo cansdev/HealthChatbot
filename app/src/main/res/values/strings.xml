@@ -8,4 +8,6 @@
     <string name="action_sign_up">SIGN UP</string>
     <string name="hello_world">Hello, world!</string>
     <string name="sign_out">Sign Out</string>
+    <string name="type_a_message">Type a message…</string>
+    <string name="send">send</string>
 </resources>
