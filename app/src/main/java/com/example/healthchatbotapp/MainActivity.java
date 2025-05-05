@@ -35,9 +35,21 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main),
-                (v, insets) -> {
-                    Insets sb = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                    v.setPadding(sb.left, sb.top, sb.right, sb.bottom);
+                (view, insets) -> {
+                    // get status+nav bar insets
+                    Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                    // get IME (keyboard) inset
+                    Insets ime = insets.getInsets(WindowInsetsCompat.Type.ime());
+
+                    // set padding: left, top, right as before, bottom = navBar + keyboard
+                    view.setPadding(
+                            sys.left,
+                            sys.top,
+                            sys.right,
+                            sys.bottom + ime.bottom
+                    );
+
+                    // return the insets untouched if you have other listeners down the tree
                     return insets;
                 }
         );
