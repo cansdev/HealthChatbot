@@ -71,5 +71,6 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.gson)
     implementation(libs.monitor)
+    implementation(libs.ext.junit)
     testImplementation(libs.junit.junit)
 }

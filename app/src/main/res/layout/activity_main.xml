@@ -65,7 +65,6 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/type_a_message"
                 app:boxBackgroundColor="?attr/colorSurface"
                 app:boxCornerRadiusTopStart="24dp"
                 app:boxCornerRadiusTopEnd="24dp"
@@ -80,8 +79,9 @@
                     android:id="@+id/etMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/type_a_message"
                     android:inputType="textMultiLine"
-                    android:maxLines="4"/>
+                    android:maxLines="4" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
