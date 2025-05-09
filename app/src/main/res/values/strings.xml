@@ -10,4 +10,8 @@
     <string name="sign_out">Sign Out</string>
     <string name="type_a_message">Type a message…</string>
     <string name="send">send</string>
+    <string name="open_drawer" />
+    <string name="close_drawer" />
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
 </resources>

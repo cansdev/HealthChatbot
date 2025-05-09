@@ -7,16 +7,20 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,34 +29,46 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Toolbar and Drawer
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        NavigationView navView = findViewById(R.id.navigationView);
 
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_profile) {
+                startActivity(new Intent(this, ProfileActivity.class));
+            } else if (id == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+            }
+            drawerLayout.closeDrawers();
+            return true;
+        });
+
+        // Edge-to-edge and insets
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main),
                 (view, insets) -> {
-                    // get status+nav bar insets
                     Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                    // get IME (keyboard) inset
                     Insets ime = insets.getInsets(WindowInsetsCompat.Type.ime());
-
-                    // set padding: left, top, right as before, bottom = navBar + keyboard
-                    view.setPadding(
-                            sys.left,
-                            sys.top,
-                            sys.right,
-                            sys.bottom + ime.bottom
-                    );
-
-                    // return the insets untouched if you have other listeners down the tree
+                    view.setPadding(sys.left, sys.top, sys.right, sys.bottom + ime.bottom);
                     return insets;
-                }
-        );
+                });
 
         RecyclerView rvChat = findViewById(R.id.rvChat);
         ChatAdapter adapter = new ChatAdapter(new ArrayList<>());
@@ -95,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         loading.setVisibility(View.GONE);
                         btnSend.setEnabled(true);
-                        // Show the entire error in a scrollable dialog:
                         new MaterialAlertDialogBuilder(MainActivity.this)
                                 .setTitle("Gemini Error")
                                 .setMessage(e.getMessage())
@@ -112,8 +127,9 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_sign_out) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(this, AuthActivity.class));

@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class GeminiClient {
     // Matches the curl sample from AI Studio
+    // TODO: Check for WiFi & Mobile (networkConnection)
     private static final String ENDPOINT =
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
                     + "?key=" + BuildConfig.GEMINI_API_KEY;
@@ -34,8 +35,8 @@ public class GeminiClient {
         void onFailure(Exception e);
     }
 
-    /**
-     * Sends `prompt` to Gemini and invokes the appropriate callback.
+    /*
+     Sends 'prompt' to Gemini and invokes the appropriate callback.
      */
     public void generateContent(String prompt, Listener listener) {
         // Construct JSON body:

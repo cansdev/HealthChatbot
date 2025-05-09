@@ -32,5 +32,9 @@
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
+
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".SettingsActivity"/>
+
     </application>
 </manifest>
