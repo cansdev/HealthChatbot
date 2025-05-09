@@ -20,4 +20,10 @@
     <string name="apply">Uygula</string>
     <string name="language">Dil</string>
     <string name="theme">Tema</string>
+
+    <string-array name="theme_options">
+        <item>Aydınlık</item>
+        <item>Karanlık</item>
+        <item>Sistem Varsayılanı</item>
+    </string-array>
 </resources>

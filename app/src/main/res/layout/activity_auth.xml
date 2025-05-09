@@ -68,7 +68,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"/>
 
-                <!-- Email (filled box) -->
+                <!-- E-mail -->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
@@ -76,16 +76,20 @@
                     android:hint="@string/hint_email"
                     app:endIconMode="custom"
                     app:endIconDrawable="@drawable/ic_baseline_email_24"
-                    app:boxBackgroundMode="filled"
+                    app:endIconTint="?attr/colorOnSurface"
                     app:boxBackgroundColor="?attr/colorSurfaceVariant"
+                    app:hintTextColor="?attr/colorOnSurface"
                     android:layout_marginBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"/>
+                        android:inputType="textEmailAddress"
+                        android:textColor="?attr/colorOnSurface" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <!-- Password (filled box with toggle) -->
                 <com.google.android.material.textfield.TextInputLayout

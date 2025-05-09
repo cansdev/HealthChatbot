@@ -2,19 +2,16 @@
     <style name="Base.Theme.HealthChatbotApp"
         parent="Theme.Material3.DayNight.NoActionBar">
 
-        <!-- Night-mode color resources
-        TODO: swap with night mode colors once developed
-        -->
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorSecondary">@color/md_theme_secondary</item>
 
         <item name="android:windowBackground">@color/md_theme_background</item>
-        <item name="colorSurface">@color/md_theme_background</item>
-        <item name="colorOnSurface">@color/md_theme_onBackground</item>
+        <item name="colorSurface">@color/md_theme_surface_dark</item>
+        <item name="colorSurfaceVariant">@color/md_theme_surfaceVariant_dark</item>
+        <item name="colorOnSurface">@color/md_theme_onSurface_dark</item>
 
         <item name="android:statusBarColor">@color/md_theme_primary</item>
         <item name="android:navigationBarColor">@color/md_theme_background</item>
-
     </style>
 </resources>

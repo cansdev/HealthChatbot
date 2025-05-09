@@ -8,10 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.ViewCompat;
-
-import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -27,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (view, insets) -> {
             view.setPadding(0, insets.getInsets(android.view.WindowInsets.Type.systemBars()).top, 0, 0);
             return insets;
@@ -47,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
         langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         languageSpinner.setAdapter(langAdapter);
 
-        // Restore saved settings
+        // Restore saved values
         themeSpinner.setSelection(prefs.getInt("themeIndex", 0));
         languageSpinner.setSelection(prefs.getInt("langIndex", 0));
 
@@ -59,28 +57,16 @@ public class SettingsActivity extends AppCompatActivity {
         int langIndex = languageSpinner.getSelectedItemPosition();
         String langCode = (langIndex == 0 ? "en" : "tr");
 
+        // Save preferences
         prefs.edit()
                 .putInt("themeIndex", themeIndex)
                 .putInt("langIndex", langIndex)
                 .putString("language", langCode)
                 .apply();
 
-        switch (themeIndex) {
-            case 0:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                break;
-            case 1:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                break;
-            case 2:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                break;
-        }
-
-        // Restart only MainActivity
+        // LocaleHelper will apply both theme and locale on restart
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
 }
