@@ -1,6 +1,8 @@
 package com.example.healthchatbotapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +28,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +36,21 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Apply saved locale first
+        SharedPreferences prefs = getSharedPreferences("app_settings", MODE_PRIVATE);
+        String lang = prefs.getString("language", "en");
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        android.content.res.Configuration config = getResources().getConfiguration();
+        config.setLocale(locale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -58,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawers();
             return true;
         });
+
+        // 🔁 Force drawer menu to re-inflate under current locale
+        navView.getMenu().clear();
+        navView.inflateMenu(R.menu.drawer_menu);
 
         // Edge-to-edge and insets
         EdgeToEdge.enable(this);
@@ -90,10 +111,14 @@ public class MainActivity extends AppCompatActivity {
             btnSend.setEnabled(false);
             loading.setVisibility(View.VISIBLE);
 
-            String fullPrompt =
+            // Use localized prompt
+            String fullPrompt = (lang.equals("tr") ?
+                    "Sen HealthChatBotApp’in tıbbi asistanısın. " +
+                            "Kısa, dostça sağlık tavsiyesi ver.\n" +
+                            "Hasta: " + text + "\nDoktor:" :
                     "You are HealthChatBotApp’s medical assistant. " +
                             "Provide concise, friendly health advice.\n" +
-                            "Patient: " + text + "\nDoctor:";
+                            "Patient: " + text + "\nDoctor:");
 
             gemini.generateContent(fullPrompt, new GeminiClient.Listener() {
                 @Override

@@ -1,0 +1,23 @@
+<resources>
+    <!-- Drawer menu -->
+    <string name="nav_profile">Profil</string>
+    <string name="nav_settings">Ayarlar</string>
+
+    <!-- App additions -->
+    <string name="send">Gönder</string>
+    <string name="app_name">HealthChatbotApp</string>
+    <string name="type_a_message">Bir mesaj yaz…</string>
+    <string name="hello_world">Merhaba dünya!</string>
+    <string name="sign_out">Çıkış yap</string>
+    <string name="welcome_title">Hoş geldiniz</string>
+    <string name="welcome_subtitle">Lütfen giriş yapın veya kayıt olun</string>
+    <string name="hint_email">E-posta</string>
+    <string name="hint_password">Şifre</string>
+    <string name="action_sign_in">Giriş Yap</string>
+    <string name="action_sign_up">Kayıt Ol</string>
+    <string name="open_drawer">Menüyü Aç</string>
+    <string name="close_drawer">Menüyü Kapat</string>
+    <string name="apply">Uygula</string>
+    <string name="language">Dil</string>
+    <string name="theme">Tema</string>
+</resources>
