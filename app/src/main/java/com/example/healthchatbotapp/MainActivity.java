@@ -120,6 +120,15 @@ public class MainActivity extends AppCompatActivity {
                             "Provide concise, friendly health advice.\n" +
                             "Patient: " + text + "\nDoctor:");
 
+            if (!NetworkUtils.isNetworkAvailable(this)) {
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle(getString(R.string.no_network_title))
+                        .setMessage(getString(R.string.no_network_message))
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+                return;
+            }
+
             gemini.generateContent(fullPrompt, new GeminiClient.Listener() {
                 @Override
                 public void onSuccess(String reply) {

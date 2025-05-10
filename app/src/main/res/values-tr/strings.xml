@@ -26,4 +26,8 @@
         <item>Karanlık</item>
         <item>Sistem Varsayılanı</item>
     </string-array>
+
+    <string name="no_network_title">İnternet Bağlantısı Yok</string>
+    <string name="no_network_message">Lütfen Wi-Fi veya mobil veri ile bağlanıp tekrar deneyin.</string>
+
 </resources>

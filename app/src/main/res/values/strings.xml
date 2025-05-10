@@ -29,5 +29,8 @@
     <string name="language">Language</string>
     <string name="theme">Theme</string>
 
+    <string name="no_network_title">No Internet Connection</string>
+    <string name="no_network_message">Please check your Wi-Fi or mobile data and try again.</string>
+
 
 </resources>
