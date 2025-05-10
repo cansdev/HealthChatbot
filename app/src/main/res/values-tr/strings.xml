@@ -30,4 +30,10 @@
     <string name="no_network_title">İnternet Bağlantısı Yok</string>
     <string name="no_network_message">Lütfen Wi-Fi veya mobil veri ile bağlanıp tekrar deneyin.</string>
 
+    <string name="profile_title">Kokpit</string>
+    <string name="username_label">Kullanıcı Adı: %s</string>
+    <string name="dob_label_not_set">Doğum Tarihi: eklenmedi</string>
+    <string name="dob_label">Doğum Tarihi: %s</string>
+    <string name="choose_dob">Doğum Tarihi Seç</string>
+
 </resources>

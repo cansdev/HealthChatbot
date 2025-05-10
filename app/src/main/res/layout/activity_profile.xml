@@ -1,6 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_chat_gradient" />
+    android:background="@drawable/bg_chat_gradient"
+    android:padding="16dp">
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="?attr/colorOnPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Username -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="?attr/textAppearanceHeadlineSmall"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:text="@string/username_label"/>
+
+    <!-- Date of Birth -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvDob"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="?attr/textAppearanceBodyMedium"
+        app:layout_constraintTop_toBottomOf="@id/tvUsername"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="@string/dob_label_not_set"/>
+
+    <!-- Picker button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPickDob"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/choose_dob"
+        app:layout_constraintTop_toBottomOf="@id/tvDob"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
