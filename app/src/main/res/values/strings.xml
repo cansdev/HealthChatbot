@@ -32,7 +32,6 @@
     <string name="no_network_title">No Internet Connection</string>
     <string name="no_network_message">Please check your Wi-Fi or mobile data and try again.</string>
 
-    <string name="profile_title">Cockpit</string>
     <string name="username_label">Username: %s</string>
     <string name="dob_label_not_set">Date of Birth: not set</string>
     <string name="dob_label">Date of Birth: %s</string>

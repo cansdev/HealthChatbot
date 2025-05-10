@@ -52,7 +52,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Toolbar with back arrow
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.profile_title));
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
         toolbar.setNavigationOnClickListener(v -> finish());
 

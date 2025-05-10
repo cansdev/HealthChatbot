@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout-land/activity_auth.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <!-- 1) Gradient “header” becomes a left panel -->
+    <View
+        android:id="@+id/vHeader"
+        android:layout_width="260dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_header_gradient"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- 2) Logo centered vertically in that panel -->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_baseline_healing_24"
+        app:tint="@android:color/white"
+        app:layout_constraintTop_toTopOf="@id/vHeader"
+        app:layout_constraintBottom_toBottomOf="@id/vHeader"
+        app:layout_constraintStart_toStartOf="@id/vHeader"
+        app:layout_constraintEnd_toEndOf="@id/vHeader"/>
+
+    <!-- 3) Auth card fills the right side -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAuth"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.BottomSheet"
+        app:cardElevation="16dp"
+        android:backgroundTint="?attr/colorSurface"
+        app:layout_constraintStart_toEndOf="@id/vHeader"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Welcome title -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?attr/textAppearanceHeadlineSmall"
+                    android:text="@string/welcome_title"/>
+
+                <!-- Subtitle -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?attr/textAppearanceBodyMedium"
+                    android:text="@string/welcome_subtitle"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- E-mail -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_email"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_baseline_email_24"
+                    app:endIconTint="?attr/colorOnSurface"
+                    app:boxBackgroundColor="?attr/colorSurfaceVariant"
+                    app:hintTextColor="?attr/colorOnSurface"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:textColor="?attr/colorOnSurface" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Password (filled box with toggle) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_password"
+                    app:endIconMode="password_toggle"
+                    app:boxBackgroundColor="?attr/colorSurfaceVariant"
+                    android:layout_marginBottom="24dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Sign In (filled) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSignIn"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_sign_in"/>
+
+                <!-- Sign Up (outlined) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSignUp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/action_sign_up"/>
+
+                <!-- Loading spinner -->
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/pbAuth"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:indicatorSize="48dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="24dp"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
